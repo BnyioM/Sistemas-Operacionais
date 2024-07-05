@@ -14,7 +14,7 @@ gcc -pthread ...
 #define NUM_THREADS 2
 
 int number = -1;
-bool numberHasChanged = false;
+bool number_has_changed = false;
 const char* filename;
 
 void* manipulate_file(void*);
@@ -38,18 +38,18 @@ void* manipulate_file(void*) {
     std::ifstream file;
     file.open(filename);
 
-    if(!file.is_open())
+    if (!file.is_open())
         exit(EXIT_FAILURE);
     
     file >> number;
     file.close();
-    numberHasChanged = true;
+    number_has_changed = true;
     printf("Thread B: %d\n", number);
 }
 
 void* wait_for_number(void*) {
     while(1) {
-        if(numberHasChanged) {
+        if (number_has_changed) {
             printf("Thread A: %d\n", number);
             break;
         }
