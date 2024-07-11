@@ -28,6 +28,7 @@ int main(int argc, char * argv[]){
 	int n_threads = atol(argv[1]);
 	pthread_t threads[n_threads];
 
+	// Execução por threads
 	for(int t = 0; t < n_threads; t++ )
 		pthread_create(&threads[t], NULL, worker, NULL);
 
@@ -36,7 +37,16 @@ int main(int argc, char * argv[]){
 	for( int i = 0; i < n_threads; i++ )
 		pthread_join(threads[i], NULL);
 
-	printf("Tempo decorrido de execução das threads: %f", ((double) (clock() - time_begin))/CLOCKS_PER_SEC);
+	printf("Tempo decorrido de execução das threads: %f\n", ((double) (clock() - time_begin))/CLOCKS_PER_SEC);
+
+	// Execução sequencial
+
+	time_begin = clock();
+
+	for(int t = 0; t < n_threads; t++ )
+		worker(NULL);
+
+	printf("Tempo decorrido de execução sequencial: %f\n", ((double) (clock() - time_begin))/CLOCKS_PER_SEC);
 
 	return 0;
 }
