@@ -7,6 +7,7 @@ gcc -pthread ...
 #include <sys/types.h>
 #include <unistd.h>
 #include <vector>
+#include <stdlib.h>
 #include <pthread.h>
 
 #define NUM_THREADS 3
@@ -39,6 +40,7 @@ void* get_vector_size(void*) {
         exit(EXIT_FAILURE);
     number_has_changed = true;
 }
+
 void* populate_vector(void*) {
     while(1) {
         if (number_has_changed) {
@@ -52,6 +54,7 @@ void* populate_vector(void*) {
     }
 
 }
+
 void* show_vector_elements(void*) {
     while(1) {
         if (vector_is_populated) {
