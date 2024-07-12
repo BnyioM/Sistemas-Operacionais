@@ -7,7 +7,7 @@ gcc -pthread ...
 #include <pthread.h>
 #include <unistd.h>
 #include <math.h>
-#include <time.h>
+#include <chrono>
 #include <iostream>
 
 void* worker(void*);
@@ -32,21 +32,29 @@ int main(int argc, char * argv[]){
 	for(int t = 0; t < n_threads; t++ )
 		pthread_create(&threads[t], NULL, worker, NULL);
 
-	int time_begin = clock();
+	auto begin = std::chrono::high_resolution_clock::now();
 
 	for( int i = 0; i < n_threads; i++ )
 		pthread_join(threads[i], NULL);
 
-	printf("Tempo decorrido de execução das threads: %f\n", ((double) (clock() - time_begin))/CLOCKS_PER_SEC);
+	auto end = std::chrono::high_resolution_clock::now();
+
+	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+	printf("Tempo decorrido de execução das threads: %f\n", elapsed.count() * 1e-9);
 
 	// Execução sequencial
 
-	time_begin = clock();
+	begin = std::chrono::high_resolution_clock::now();
 
 	for(int t = 0; t < n_threads; t++ )
 		worker(NULL);
 
-	printf("Tempo decorrido de execução sequencial: %f\n", ((double) (clock() - time_begin))/CLOCKS_PER_SEC);
+	end = std::chrono::high_resolution_clock::now();
+
+	elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
+
+	printf("Tempo decorrido de execução sequencial: %f\n", elapsed.count() * 1e-9);
 
 	return 0;
 }
