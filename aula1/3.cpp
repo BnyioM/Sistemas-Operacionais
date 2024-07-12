@@ -41,7 +41,7 @@ int main(int argc, char * argv[]){
 
 	auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-	printf("Tempo decorrido de execução das threads: %f\n", elapsed.count() * 1e-9);
+	printf("Tempo decorrido de execução das threads: %f segundos\n", elapsed.count() * 1e-9);
 
 	// Execução sequencial
 
@@ -54,7 +54,7 @@ int main(int argc, char * argv[]){
 
 	elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin);
 
-	printf("Tempo decorrido de execução sequencial: %f\n", elapsed.count() * 1e-9);
+	printf("Tempo decorrido de execução sequencial: %f segundos\n", elapsed.count() * 1e-9);
 
 	return 0;
 }
