@@ -9,11 +9,13 @@ int iteracoes = 10000;/*NÃO ALTERE ESSE VALOR*/
 pthread_mutex_t mutex;
 
 void* worker(void *thread_id){
+	int j = 0;
 	for (int i=0; i<iteracoes; i++){
-		pthread_mutex_lock(&mutex);
-		acc = acc + 1;
-		pthread_mutex_unlock(&mutex);
+		j ++;
 	}
+	pthread_mutex_lock(&mutex);
+	acc = acc + j;
+	pthread_mutex_unlock(&mutex);
 }
 
 int main(int argc, char * argv[]){
@@ -23,6 +25,9 @@ int main(int argc, char * argv[]){
 
 	for(int t = 0; t < n_threads; t++ )
 	      pthread_create(&threads[t], NULL, worker, (void *)t);
+
+	for (int i = 0; i < n_threads; i++)
+        pthread_join(threads[i], NULL);
     
 	/*NAO ALTERE ESSE PRINTF*/
     printf("Acc Esperado [%d] Acc obtido [%d]\n", n_threads*iteracoes, acc);
