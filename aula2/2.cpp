@@ -13,7 +13,7 @@ int* number = (int*) mmap(NULL, sizeof (int) , PROT_READ | PROT_WRITE,
                 MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 int iteracoes = 10000;
 pthread_mutex_t* mutex = (pthread_mutex_t*) mmap(NULL, sizeof (pthread_mutex_t) , PROT_READ | PROT_WRITE,
-                MAP_SHARED | MAP_ANONYMOUS, -1, 0);;
+                MAP_SHARED | MAP_ANONYMOUS, -1, 0);
 
 int main(int argc, char **argv) {
     int n = atoi(argv[1]);
