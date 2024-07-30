@@ -29,6 +29,13 @@ if __name__ == "__main__":
         message = input("Press Button")#Não altere essa linha
         p = random.randint(0, len(objects) - 1)#Seleciona um objeto qualquer da Lista
         
+        pessoa = objects[p]
+        serialized_p = pickle.dumps(pessoa)
+        client_socket.send(serialized_p)
+        
+        response = client_socket.recv(4096)
+        pessoa.idade = response.decode()
+        
         print(objects[p].__dict__) #Não altere essa linha
         
     client_socket.close()
